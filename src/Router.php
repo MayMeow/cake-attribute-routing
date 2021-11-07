@@ -8,7 +8,9 @@ use MayMeow\Routing\Attributes\Route;
 
 class Router
 {
-    private static string $key = '_Attribute.Routes_';
+    private static string $key = 'Attribute.Routes';
+
+    private static string $cacheConfig = '_cake_routes_';
 
     /**
      * @var array<Route> $routes
@@ -41,13 +43,13 @@ class Router
      */
     public function getRoutes(): array
     {
-        $routes = Cache::read(static::$key);
+        $routes = Cache::read(static::$key, static::$cacheConfig);
 
         if ($routes != false) {
             return $routes;
         }
 
-        Cache::write(static::$key, $this->routes);
+        Cache::write(static::$key, $this->routes, static::$cacheConfig);
 
         return $this->routes;
     }
