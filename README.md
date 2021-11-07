@@ -41,7 +41,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $attributeRoutes = (new \MayMeow\Routing\Router())->getRoutes();
 
     foreach ($attributeRoutes as $attributeRoute) {
-        $builder->connect($attributeRoute->getUri(), $attributeRoute->getAction());
+        $builder->connect($attributeRoute->getUri(), $attributeRoute->getAction(), $attributeRoute->getOptions());
     }
 // ...
 // fallback route
