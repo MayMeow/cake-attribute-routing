@@ -55,9 +55,42 @@ public function index()
     $this->set(compact('users'));
 }
 ```
+### Wildcard parameters
 
-Remember if you define wildcard route as  `#[Route('/users/*')]` you have to define
-all other routes in sub-path.
+Sometimes you need to pass parameters to your action in that case you can use wildcard route:
+
+```php
+#[Route('/users/edit/*')]
+public function edit($id = null)
+{
+    $user = $this->Users->get($id, [
+        'contain' => [],
+    ]);
+    // ...
+}
+```
+
+:warning: If you're creating wildcard route you must define all other routers in sub-path.
+
+### Named parameters
+
+Instead of using wildcard you can use named parameters. This is usable wne you want to pass more than one
+parameter to your controllers' action.
+
+```php
+#[Route('/users/:id/details', options: ['id' => '\d+', 'pass' => ['id']])]
+public function view($id = null)
+{
+    $user = $this->Users->get($id, [
+        'contain' => [],
+    ]);
+
+    $this->set(compact('user'));
+}
+```
+
+When you're creating route with named parameter you have to pass options to tell router which parameters
+you want to pass to controller.
 
 Path to controller action `Controller::action` is generated automatically from
 controller class name and method name;
