@@ -15,9 +15,13 @@ class Route
      */
     protected string $action;
 
-    public function __construct(string $uri, ?string $action = null)
+    /** @var array<string> $options */
+    protected array $options;
+
+    public function __construct(string $uri, ?string $action = null, ?array $options = [])
     {
         $this->uri = $uri;
+        $this->options = $options;
 
         if (!is_null($action)) {
             $this->action = $action;
@@ -56,6 +60,14 @@ class Route
     public function setAction(string $action): void
     {
         $this->action = $action;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getOptions(): ?array
+    {
+        return $this->options;
     }
 
 }
