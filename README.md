@@ -2,6 +2,12 @@
 
 Attribute routing for CakePHP 4.*
 
+## Requirements
+
+- CakePHP 4.x
+- PHP 8.x :warning: This plugin using features that are available in PHP 8 and later.
+- Cache (tested with redis), all routes are cached before can be used.
+
 ## Installation
 
 You can install this plugin into your CakePHP application using [composer](https://getcomposer.org).
@@ -94,5 +100,12 @@ you want to pass to controller.
 
 Path to controller action `Controller::action` is generated automatically from
 controller class name and method name;
+
+## Troubleshooting
+
+This plugin using cache for routes: all routes need to be cached before use. If you have problem with
+routes try to clear cache.
+
+Fond bug? Or do you want new feature? Open new Issue https://github.com/MayMeow/cake-attribute-routing/issues
 
 License MIT
