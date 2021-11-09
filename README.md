@@ -17,6 +17,13 @@ The recommended way to install composer packages is:
 ```
 composer require maymeow/cake-attribute-routing
 ```
+
+And load it.
+
+```bash
+php bin/cake.php plugin load MayMeow/Routing
+```
+
 ## Configuring
 
 Add new key `Controllers` somewhere in application configuration and provide
@@ -29,25 +36,6 @@ controller names where you want to use Attribute Routes.
 ]
 ```
 
-Next step is update `routes.php` file. Add following into `scope('/')` right before
-`fallback` route:
-
-```php
-// routes.php
-$routes->scope('/', function (RouteBuilder $builder) {
-// already deffined routes
-//...
-    /** @var array<\MayMeow\Routing\Attributes\Route> $mayMoewRoutes */
-    $attributeRoutes = (new \MayMeow\Routing\Router())->getRoutes();
-
-    foreach ($attributeRoutes as $attributeRoute) {
-        $builder->connect($attributeRoute->getUri(), $attributeRoute->getAction(), $attributeRoute->getOptions());
-    }
-// ...
-// fallback route
-$builder->fallbacks();
-}
-```
 ## Usage
 
 To define route add attribute `Route` with required path to the methods as follows:

@@ -7,6 +7,7 @@ use Cake\Core\BasePlugin;
 use Cake\Core\PluginApplicationInterface;
 use Cake\Http\MiddlewareQueue;
 use Cake\Routing\RouteBuilder;
+use MayMeow\Routing\Attributes\Route;
 
 /**
  * Plugin for MayMeow\Routing
@@ -46,6 +47,21 @@ class Plugin extends BasePlugin
                 $builder->fallbacks();
             }
         );
+
+        // load Attribute routes
+        $routes->scope('/', function (RouteBuilder $builder) {
+
+            /** @var array<Route> $mayMoewRoutes */
+            $attributeRoutes = (new \MayMeow\Routing\Router())->getRoutes();
+
+            foreach ($attributeRoutes as $attributeRoute) {
+                $builder->connect($attributeRoute->getUri(), $attributeRoute->getAction(), $attributeRoute->getOptions());
+            }
+
+            $builder->fallbacks();
+
+        });
+
         parent::routes($routes);
     }
 
