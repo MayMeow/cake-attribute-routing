@@ -19,6 +19,17 @@ class Router
 
     public function __construct()
     {
+        //
+    }
+
+    /**
+     * Build routes to the controllers
+     *
+     * @return array<Route>
+     * @throws \ReflectionException
+     */
+    protected function buildRoutes(): array
+    {
         foreach (Configure::read('Controllers') as $controller) {
             $reflectedClass = new \ReflectionClass($controller);
 
@@ -36,10 +47,13 @@ class Router
 
         }
 
+        return $this->routes;
     }
 
     /**
-     * @return array<Route>
+     * Returns routes from cache anr build some
+     * @return array<Route> Array of routes
+     * @throws \ReflectionException
      */
     public function getRoutes(): array
     {
@@ -49,9 +63,10 @@ class Router
             return $routes;
         }
 
-        Cache::write(static::$key, $this->routes, static::$cacheConfig);
+        $routes = $this->buildRoutes();
+        Cache::write(static::$key, $routes, static::$cacheConfig);
 
-        return $this->routes;
+        return $routes;
     }
 
     /**
